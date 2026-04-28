@@ -6,6 +6,9 @@ def traveler():
 def werewolf():
     pass
 
+def infected():
+    pass
+
 def terrain_flat():
     pass
 
