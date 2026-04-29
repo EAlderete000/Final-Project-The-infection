@@ -40,14 +40,15 @@ class HandlerLineImage(HandlerBase):
         return [l,image]
 
 
-plt.figure(figsize=(5,5))
-line,  = plt.scatter([1,2],[1.5,3], color="#1f66e0", lw=1.5)
-line2,  = plt.scatter([1,2],[1,2], color="#efe400", lw=1.5)
-plt.ylabel("Flower power")
+plt.figure(figsize=(10,10))
+line,  = plt.plot([1,2],[1.5,3], color="#1f66e0", lw=1.5)
+line2,  = plt.plot([1,2],[1,2], color="#efe400", lw=1.5)
+line3,  = plt.plot([1,3],[5,2], color="#ff17ff", lw=1.5)
+plt.ylabel("Werewolves")
 
-plt.legend([line, line2], ["", ""],
-   handler_map={ line: HandlerLineImage("figures/Traveler.png"), line2: HandlerLineImage("figures/Werewolf.png")}, 
-   handlelength=2, labelspacing=0.0, fontsize=40, borderpad=0.15, loc=2, 
-    handletextpad=0.2, borderaxespad=0.15)
+plt.legend([line, line2, line3], ["", "", ""],
+   handler_map={ line: HandlerLineImage("figures/Traveler.png"), line2: HandlerLineImage("figures/Werewolves.png"), line3: HandlerLineImage("figures/Infected.png")}, 
+   handlelength=1, labelspacing=0.0, fontsize=100, borderpad=0.15, loc=2, 
+    handletextpad=0.1, borderaxespad=0.15)
 
 plt.show()
