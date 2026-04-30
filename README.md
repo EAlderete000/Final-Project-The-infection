@@ -1,4 +1,5 @@
 # Final-Project-The-infection
+# The report
 
 ## Overview:
 This final project will focus on the interaction of walkers in an environment that is actually just unique functions(will attempt 3D visuals if enough time is available). These walkers will be either a werewolf or a traveler - an amount of travelers and werewolves will traverse the same terrain. These terrains will hold obstacles such as infections, walls, and cliffs. Emphasis on the infections - we are studying the population of how werewolves would interact with travelers/humans. There would be travelers, infected and werewolves
@@ -31,3 +32,8 @@ Heatmap with trails with a legend for a more complex function(not flat)
 
 
 ### Part 3:
+
+# Autopsy of the Lycan Virus
+This is the overview and study of the way a certain wolf virus is to be carried and spread across a desired plain.
+
+![Traveler](figures/Traveler.png)
