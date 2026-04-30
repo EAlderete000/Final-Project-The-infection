@@ -1,7 +1,7 @@
 # Final-Project-The-infection
 
 ## Overview:
-This final project will focus on the interaction of walkers in an environment that is actually just unique functions. These walkers will be either a werewolf or a traveler - an amount of travelers and werewolves will traverse the same terrain. These terrains will hold obstacles such as infections, walls, and cliffs. Emphasis on the infections - we are studying the population of how werewolves would interact with travelers/humans. There would be travelers, infected and werewolves
+This final project will focus on the interaction of walkers in an environment that is actually just unique functions(will attempt 3D visuals if enough time is available). These walkers will be either a werewolf or a traveler - an amount of travelers and werewolves will traverse the same terrain. These terrains will hold obstacles such as infections, walls, and cliffs. Emphasis on the infections - we are studying the population of how werewolves would interact with travelers/humans. There would be travelers, infected and werewolves
 
 ### Part 1:
 Use the walker's method to represent a werewolf and a traveler.
