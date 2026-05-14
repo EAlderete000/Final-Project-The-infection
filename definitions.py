@@ -36,7 +36,7 @@ def random_walk(func : callable,
 
         if new_value < current:
             x,y = new_x, new_y
-            path.append((x,y))
+        path.append((x,y))
 
     return np.array(path)
 
@@ -118,6 +118,18 @@ def is_infected(traveler_pos,
 
     return distance(traveler_pos, werewolf_pos) <= infection_radius
 
+def generate_random_points(n,
+                           x_range,
+                           y_range):
+    """This is a function to generate random points within a specified range, which can be used for traveler and werewolf starting positions."""
+
+    points = []
+    for _ in range(n):
+        x = np.random.uniform(x_range[0], x_range[1])
+        y = np.random.uniform(y_range[0], y_range[1])
+        points.append((x,y))
+    return points
+
 
 #========Terrain functions======#
 #These are just a variety of functions 
@@ -138,11 +150,13 @@ def terrain_complex(x, y):
 #==========The simulation Function=======#
 
 def run_simulation(func: callable,
-                   traveler_starts: list,
-                   werewolf_starts: list,
+                   traveler_starts: int,
+                   werewolf_starts: int,
                    n_steps: int,
                    step_size: float,
-                   infection_radius: float):
+                   infection_radius: float,
+                   x_range,
+                   y_range):
 
     '''This is basically the entire 'brains' to how the simulation will run. 
 
@@ -152,6 +166,10 @@ Travlers will become infected if they come within infection_radius of any werewo
 
     travelers = []
     werewolves = []
+
+    #generating random points
+    traveler_starts = generate_random_points(traveler_starts, x_range, y_range)
+    werewolf_starts = generate_random_points(werewolf_starts, x_range, y_range)
 
     #paths
     for start in traveler_starts:
@@ -190,7 +208,8 @@ Travlers will become infected if they come within infection_radius of any werewo
         "initial_werewolves": len(werewolves),
         "final_travelers": len(final_travelers),
         "final_infected": len(final_infected),
-        "Therefore...final_werewolves": len(werewolves) + len(final_infected)} #since infected also act as werewolves
+        "Therefore...final_werewolves": len(werewolves) + len(final_infected)
+        } #since infected also act as werewolves
 
     return{
     "travelers": final_travelers,
