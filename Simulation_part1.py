@@ -1,21 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from definitions import terrain_flat, run_simulation 
+from definitions import terrain_1, terrain_flat, run_simulation 
 
 
 """This file will specifically run summary and states of the functions and simulation.
 """
 
 
-results = run_simulation(func=terrain_flat, #terrain function
+results = run_simulation(func=terrain_1, #terrain function
                          traveler_starts= 1, #as many points can be added
-                         werewolf_starts= 1,#as many points can be added
+                         werewolf_starts= 3,#as many points can be added
                          n_steps=100, #the amount of steps the simulation will run
                          step_size=0.1, #a distance the entity can walk
-                         infection_radius=1.0,
-                         x_range=(-6, 6),
-                         y_range=(-6, 6)
-                         ) #distane of the werewolf infection
+                         infection_radius=1.0, #distane of the werewolf infection
+                         x_range=(-6, 6), #The size of the terrain x-dir
+                         y_range=(-6, 6) #The size of the terrain y-dir
+                         )
 
 print(results["summary"])
 
