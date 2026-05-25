@@ -35,7 +35,7 @@ Should suspect results stay at a certain probability of turning into a werewolf 
 
 
 
-### Part 3:
+## Part 3:
 Add - plotting 
 Make a definition for terrain obstacles. These would be randomly generated and occur randomly. Such as - being able to run off cliffs, getting stuck in dips. This would most-likely just be a modified version of the random walk function.
 Travelers have become smarter; they will now prefer to climb up terrain and mountains. Werewolves will prefer lower terrain(?).
@@ -52,10 +52,11 @@ Heatmap with trails with a legend for a more complex function(not flat)
 
 
 
-### Part 4:
+## Part 4:
+### Part 4 results:
 
 # Autopsy of the Lycanthrope Virus
-This is the overview and study of the way a certain wolf virus is to be carried and spread across a desired plain.
+This is the overview and study of the way a certain wolf virus is to be carried and spread across a desired plain. Which would otherwise showcase images and outputs and overall data for each part of the simulation process and describe and talk about the data.
 
 ![Traveler](figures/Traveler.png)
 ![Infected](figures/Infected.png)
