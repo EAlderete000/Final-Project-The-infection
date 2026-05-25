@@ -135,16 +135,16 @@ def generate_random_points(n,
 #These are just a variety of functions 
 
 #will be used for part 1 only
-def terrain_flat(x,y):
+def terrain_1(x,y):
     return np.cos(x**2 + y**2)
 
 #below will be used for part 2 - 3(?)
 
-def terrain_complex():
+def terrain_2():
     pass
 
 #Himmelblau function
-def terrain_complex(x, y):
+def terrain_3(x, y):
     return (x**2 + y - 11)**2 + (x + y**2 - 7)**2
 
 #==========The simulation Function=======#
