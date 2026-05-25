@@ -1,118 +1,46 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from definitions import infected, traveler, werewolf, terrain_flat , HandlerLineImage
-from matplotlib import colormaps
-
-import matplotlib.lines
-from matplotlib.transforms import Bbox, TransformedBbox
-from matplotlib.legend_handler import HandlerBase
-from matplotlib.image import BboxImage
-
-'''Overview - a simple plat field(function) with 1 traveler and 1 werewolf, which would then have the 
-possibility of infecting the traveler which results in 0 travelers 1 werewolf and 1 infected.
-The plot would show the path the traveler and werewolf(and infected) take. 
-
-Output summary would showcase the number of travelers, werewolves, and infected at the end of a simulation. Additionally show the probability of
-being bit by a werewolf and becoming infected over an iteration of days.'''
+from definitions import terrain_1, terrain_1, run_simulation 
 
 
-def main():
-    #======Adjustable values======#
-    grid_size = 700
-    sample_size = 10_000 #steps
-    step_size = 1
-    x_min, x_max = -6, 6
-    y_min, y_max = -6, 6
+"""This file will specifically run summary and states of the functions and simulation.
+"""
 
-    #x and y and gridsize
-    x = np.linspace(x_min,x_max, grid_size)
-    y = np.linspace(y_min,y_max, grid_size)
 
-    #Meshgrid to achieve (x,y) pairs to then, plot
-    X, Y = np.meshgrid(x,y)
+results = run_simulation(func=terrain_1, #terrain function
+                         traveler_starts= 10, #as many points can be added
+                         werewolf_starts= 5,#as many points can be added
+                         n_steps=100, #the amount of steps the simulation will run
+                         step_size=0.5, #a distance the entity can walk
+                         infection_radius=1.0, #distane of the werewolf infection
+                         x_range=(-6, 6), #The size of the terrain x-dir
+                         y_range=(-6, 6) #The size of the terrain y-dir
+                         )
 
-    #Flat(mostly) Terrain function
-    flatZ = terrain_flat(X,Y)
+#Summary of the simulation results
 
-    #Random sampling - creations a random x and y coordinates for travelers and werewolves to start at
-    random_x = np.random.uniform(x_min, x_max, int(sample_size))
-    random_y = np.random.uniform(y_min, y_max, int(sample_size))
+#intial and final states of the travelers, werewolves, and infected.
+print(results["summary"])
 
-    #=====Traveler, infected and werewolf=======#
-    werewolf_path = werewolf(terrain_flat, (random_x[0], random_y[0]), n_steps = sample_size, step_size = step_size)
-    werewolf_path = np.array(werewolf_path)#Converts to numpy array
-    traveler_path = traveler(terrain_flat, (random_x[1], random_y[1]), n_steps = sample_size, step_size = step_size)
-    traveler_path = np.array(traveler_path) #Converts to numpy array
-    '''infected_path = infected(terrain_flat, (random_x[2], random_y[2]), n_steps = sample_size, step_size = step_size)
-    infected_path = np.array(infected_path) #Converts to numpy array''' #there should not be an infected
+#The paths in which the travelers, werewolves, and infected took, starting and end points.
+for i, traveler in enumerate(results["travelers"]):
+    start = traveler["path"][0]
+    end = traveler["path"][-1]
+    print(f"Traveler {i+1}: Start: {start}, End: {end}")
 
-    #====Print-out Summary=====#
-    print("Summary of simulation:")
-    print("========================")
-    print(f"Initial number of travelers: {len(traveler_path)}") #Initial travelers should be 1
-    print(f"Initial number of werewolves: {len(werewolf_path)}") #Initial werewolves should be 1
-    #print(f"Initial number of infected: {len(infected_path)}") #Initial infected should be 0
-    print("========================")
-    print(f"Final number of travelers: {len(traveler_path)}")
-    #print(f"Final number of infected and werewolves: {len(infected_path) + len(werewolf_path)}")
-    print("========================")
-    print(f"Number of iterations: {sample_size}")
-    #print(f"Probability of becoming infected: {len(infected_path) / sample_size:.2%}")
-    print("========================")
-    list(colormaps)
+for i, werewolf in enumerate(results["werewolves"]):
+    start = werewolf["path"][0]
+    end = werewolf["path"][-1]
+    print(f"Werewolf {i+1}: Start: {start}, End: {end}")
 
-#========Scatter-plot on top of contour========================#
+for i, infected in enumerate(results["infected"]):
+    start = infected["path"][0]
+    end = infected["path"][-1]
+    print(f"Infected {i+1}: Start: {start}, End: {end}")  
 
-    plt.figure(figsize=(12,10))
-    heatmap = plt.contourf(X, Y, flatZ, levels = 100, cmap = "Blues", alpha = 0.5)
-    
-    traveler_path= plt.plot(traveler_path[:,0], 
-                                traveler_path[:,1], 
-                                color="#216df1", 
-                                lw=1.0)
-
-    werewolf_path= plt.plot(werewolf_path[:,0], 
-                                werewolf_path[:,1], 
-                                color="#efe400", 
-                                lw=1.0)
-
-    '''infected_path= plt.plot(infected_path[:,0], 
-                                infected_path[:,1], 
-                                color="#ff17ff", 
-                                lw=1.0)''' # there should not be an infected path
-    
-    plt.ylabel("y")
-    plt.xlabel("x")
-    plt.title("trails of infection")
-    plt.colorbar(heatmap)
-    #plt.legend()
-    plt.show()
-
-'''    This is a visualized legend for the plot
-
-    #its pulling from the image_kegend.py which.. i dont want
-    #i want to motify all the plots here... while having the image_legend file be universal
-    #for all parts...
-    print(traveler_path)
-    plt.legend(
-        [traveler_path, werewolf_path, infected_path],
-        ["", "", ""],
-        handler_map={
-        traveler_path: HandlerLineImage("figures/Traveler.png"), 
-        werewolf_path: HandlerLineImage("figures/Werewolves.png"), 
-        infected_path: HandlerLineImage("figures/Infected.png")
-        }, 
-        handlelength=1, 
-        labelspacing=0.0, 
-        fontsize=100, 
-        borderpad=0.15, 
-        loc=2, 
-        handletextpad=0.1, 
-        borderaxespad=0.15,
-        
-    )
-
-    plt.show()'''
-
-if __name__ == "__main__":
-    main()
+#Probability of getting an infection
+total_travelers = len(results["travelers"])
+total_werewolves = len(results["werewolves"])
+total_infected = len(results["infected"])
+infection_probability = total_infected / (total_travelers + total_werewolves) * 100 if (total_travelers + total_werewolves) > 0 else 0 #Finding the probability but if infected is 0, then probability in becoming a werewolf is 0%.%.
+print(f"Probability of getting infected: {infection_probability:.2f}%")  
