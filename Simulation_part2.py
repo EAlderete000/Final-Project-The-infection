@@ -1,14 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from definitions import terrain_1, terrain_1, run_simulation 
+from definitions import run_multiple_simulations, terrain_1, terrain_1, run_simulation 
 
 
-"""This file will specifically run summary and states of the functions and simulation.
+"""This file will specifically run summary and states of the functions and simulation. Control the amount of simulations are produced
 """
 
 
-results = run_simulation(func=terrain_1, #terrain function
-                         traveler_starts= 10, #as many points can be added
+results = run_multiple_simulations(
+                        n_simulations=1000, #number of simulation iterations
+                        func=terrain_1, #terrain function
+                         traveler_starts= 5, #as many points can be added
                          werewolf_starts= 5,#as many points can be added
                          n_steps=100, #the amount of steps the simulation will run
                          step_size=0.5, #a distance the entity can walk
@@ -22,21 +24,11 @@ results = run_simulation(func=terrain_1, #terrain function
 #intial and final states of the travelers, werewolves, and infected.
 print(results["summary"])
 
-#The paths in which the travelers, werewolves, and infected took, starting and end points.
-for i, traveler in enumerate(results["travelers"]):
-    start = traveler["path"][0]
-    end = traveler["path"][-1]
-    print(f"Traveler {i+1}: Start: {start}, End: {end}")
-
-for i, werewolf in enumerate(results["werewolves"]):
-    start = werewolf["path"][0]
-    end = werewolf["path"][-1]
-    print(f"Werewolf {i+1}: Start: {start}, End: {end}")
-
-for i, infected in enumerate(results["infected"]):
-    start = infected["path"][0]
-    end = infected["path"][-1]
-    print(f"Infected {i+1}: Start: {start}, End: {end}")  
+print(
+    f"Probability of becoming infected after "
+    f"{results['n_simulations']} simulations: "
+    f"{results['infection_probability']:.2f}%"
+)
 
 #Probability of getting an infection
 total_travelers = len(results["travelers"])
