@@ -6,6 +6,16 @@ from matplotlib.transforms import Bbox, TransformedBbox
 from matplotlib.legend_handler import HandlerBase
 from matplotlib.image import BboxImage
 
+#=======Value ERrors=====#
+
+def value_error(travelers, 
+                werewolves
+                ):
+    """This is a function to check for value errors in the number of travelers, werewolves, and infected. For example, there cannot be negative numbers of any of these entities."""
+
+    if len(travelers) < 0 or len(werewolves) < 0 :
+        raise ValueError("Number of travelers or werewolves cannot be negative.")
+
 
 #=======Entity/walker functions ====#
 def random_walk(func : callable,
@@ -164,12 +174,15 @@ The werewolf infection simulation...
 
 Travlers will become infected if they come within infection_radius of any werewolf or infected traveler. spreading like a virus'''
 
+
     travelers = []
     werewolves = []
 
     #generating random points
     traveler_starts = generate_random_points(traveler_starts, x_range, y_range)
     werewolf_starts = generate_random_points(werewolf_starts, x_range, y_range)
+
+    value_error(traveler_starts, werewolf_starts)
 
     #paths
     for start in traveler_starts:
@@ -217,6 +230,39 @@ Travlers will become infected if they come within infection_radius of any werewo
     "werewolves": werewolves,
     "summary": summary,
     }
+
+#===multiple iterations simulation function=====#
+
+def run_multiple_simulations(n_simulations,
+                             func: callable,
+                             traveler_starts: int,
+                             werewolf_starts: int,
+                             n_steps: int,
+                             step_size: float,
+                             infection_radius: float,
+                             x_range ,
+                             y_range 
+                             ):
+    
+    '''This is a function to run multiple iterations of the simulation'''
+
+    for i in range(n_simulations):
+        results = run_simulation(
+            func = func,
+            traveler_starts = traveler_starts,
+            werewolf_starts = werewolf_starts,
+            n_steps = n_steps,
+            step_size = step_size,
+            infection_radius = infection_radius,
+            x_range = x_range,
+            y_range = y_range
+        )
+
+        return results
+
+
+
+
 
 # Source - https://stackoverflow.com/a/42169584
 # Posted by ImportanceOfBeingErnest, modified by community. See post 'Timeline' for change history
